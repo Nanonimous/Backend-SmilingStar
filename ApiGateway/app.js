@@ -43,3 +43,15 @@ app.use('/write', verifyToken, (req, res, next) => writeServiceProxy(req, res, n
 app.listen(PORT, () => {
     console.log(`🚀 API Gateway running on http://localhost:${PORT}`);
 });
+
+import express from "express";
+import enquiry from "./src/routers/enquiry.routes.js"
+
+const app = express();
+app.use(express.json());
+
+
+app.use('/api/enquiry',enquiry)
+
+
+export default app;

@@ -13,7 +13,18 @@ export const postAllEnquiry = async (req,res)=>{
     try{
         const newEnquiry = req.body;
         console.log(newEnquiry);
-        const response = await axios.post("http://localhost:4000/Mc-1/post/enquiry",newEnquiry);
+        const response = await axios.post("http://localhost:4000/Mc-2/enq_methods/enquiry",newEnquiry);
+        res.status(200).json(response.data);
+    }catch(err){    
+        res.status(500).json({ message: 'Failed to fetch products' });
+    }
+}
+
+export const deleteAllEnquiry = async (req,res)=>{
+    try{
+        const newEnquiry = req.body;
+        console.log(newEnquiry)
+        const response = await axios.delete("http://localhost:4000/Mc-2/enq_methods/enquiry",{data:newEnquiry});
         res.status(200).json(response.data);
     }catch(err){    
         res.status(500).json({ message: 'Failed to fetch products' });

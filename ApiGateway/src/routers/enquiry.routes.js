@@ -1,6 +1,10 @@
 import express from "express";
 
-import {getAllEnquiry} from "../controllers/enquiry.controller.js"
+import {getAllEnquiry,postAllEnquiry} from "../controllers/enquiry.controller.js"
 const router = express.Router(); 
 
 router.get("/",getAllEnquiry)
+router.post("/",postAllEnquiry)
+router.delete("/",deleteAllEnquiry)
+
+export default router;

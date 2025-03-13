@@ -2,7 +2,7 @@ import express from "express";
 
 import authmiddleware from '../middlewares/authmiddleware.js';
 
-import {getAllEnquiry,postAllEnquiry} from "../controllers/enquiry.controller.js"
+import {getAllEnquiry,postAllEnquiry,deleteAllEnquiry} from "../controllers/enquiry.controller.js"
 const router = express.Router(); 
 
 router.get("/",authmiddleware,getAllEnquiry)

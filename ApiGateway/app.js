@@ -1,16 +1,11 @@
-import express from 'express';
-
-import jwt from 'jsonwebtoken'
-
+import express from "express";
+import enquiry from "./src/routers/enquiry.routes.js"
 
 const app = express();
-const PORT = 3000;
-const SECRET_KEY = 'supersecretkey';
-
 app.use(express.json());
 
 
-
+app.use('/api/enquiry',enquiry)
 
 function verifyToken(req, res, next) {
     console.log(req.rawHeaders[15].split("=")[1]);
@@ -40,15 +35,5 @@ app.get('/',verifyToken,async(req,res)=>{
     console.log("helo");
     
 })
-app.use('/read', verifyToken, (req, res, next) => readServiceProxy(req, res, next));
-app.use('/write', verifyToken, (req, res, next) => writeServiceProxy(req, res, next));
-
-
-
-
-app.listen(PORT, () => {
-    console.log(`🚀 API Gateway running on http://localhost:${PORT}`);
-});
-
 
 export default app;

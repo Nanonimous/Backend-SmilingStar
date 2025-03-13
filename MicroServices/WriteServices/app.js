@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 
-app.use('/Mc-2/enq_methods',enquiry)
+app.use('/Mc-2/methods',enquiry)
 
 
 export default app;

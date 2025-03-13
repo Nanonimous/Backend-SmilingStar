@@ -5,6 +5,8 @@ export const postAll = async (req,res)=>{
     try{
         const newEnquiry = req.body;
         const tb_Name = req.params.tb;
+        console.log(tb_Name)
+        console.log(newEnquiry)
         const out = await postIt.postData(tb_Name,newEnquiry);
         res.status(200).json(out);
     }catch(err){

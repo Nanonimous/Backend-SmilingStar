@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use('/api/enquiry',enquiry)
 
-app.use('0',student)
+
 
 
 

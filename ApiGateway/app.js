@@ -7,11 +7,7 @@ const app = express();
 app.use(express.json());
 
 
-app.use('/api/enquiry',enquiry)
-
-app.use('0',student)
-
-
+app.use('/api/stu_enq',enquiry)
 
 
 export default app;

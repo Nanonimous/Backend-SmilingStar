@@ -7,5 +7,8 @@ const router = express.Router();
 router.get("/",getAllstudents)
 router.post("/",poststudent)
 router.delete("/",deletestudent)
+router.get("/",getAllstudents)
+router.post("/",poststudent)
+router.delete("/",deletestudent)
 
 export default router;

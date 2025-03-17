@@ -8,11 +8,20 @@ var colTemplates_post = {
     students :{ 
         cols : `(student_name,father_name,mother_name,address,email,age,phone_number,gender,monthly_fee)`,
         vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9)`
+    },
+    payments : {
+        cols : `(student_id,payment_date,status,month,year)`,
+        vals : `($1 , CURRENT_DATE , true , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
+    },
+    attendance : {
+        cols : `(student_id,attendance_date,status,month,year)`,
+        vals : `($1, CURRENT_DATE , true , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
     }
 }
 
 export const postData = async (Tb_name,newEnquiry)=>{
     try{
+        console.log(Object.values(newEnquiry))
         await db.query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
         return("sucessfully added the enquiry data");
     }
@@ -27,6 +36,9 @@ var colTemplates_delete = {
     },
     students :{ 
         condition : `student_id`,
+    },
+    payments :{
+        condition : "payment_id"
     }
 }
 

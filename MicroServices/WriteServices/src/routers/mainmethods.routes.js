@@ -1,6 +1,6 @@
 import express from "express";
 
-import {postAll,deleteAll} from "../controllers/enquiry.controller.js"
+import {postAll,deleteAll} from "../controllers/mainmethods.controller.js"
 const router = express.Router(); 
 
 router.post("/:tb",postAll);

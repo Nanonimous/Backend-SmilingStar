@@ -1,11 +1,11 @@
 import express from 'express';
-import authmiddleware from '../middlewares/authmiddleware';
-import { getAllstudents,poststudent,deletestudent } from '../controllers/student.controller'
+import authmiddleware from '../middlewares/authmiddleware.js';
+import { getAllstudents,poststudent,deletestudent } from '../controllers/student.controller.js'
 
 const router = express.Router(); 
 
-router.get("/",authmiddleware,getAllstudents)
-router.post("/",authmiddleware,poststudent)
-router.delete("/",authmiddleware,deletestudent)
+router.get("/",getAllstudents)
+router.post("/",poststudent)
+router.delete("/",deletestudent)
 
 export default router;

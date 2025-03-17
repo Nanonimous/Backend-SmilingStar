@@ -22,7 +22,7 @@ export const poststudent = async(req,res)=>{
 export const deletestudent = async(req,res)=>{
     const studentid=req.body;
     try{
-        const response = await axios.delete("http://localhost:3000/Mc-2/delete/students",studentid);
+        const response = await axios.delete("http://localhost:3000/Mc-2/delete/students",{data:studentid});
         res.status(200).json(response.data);
     }catch(err){
         res.status(501).json({message:err});

@@ -10,4 +10,5 @@ app.use(express.json());
 app.use('/api/stu_enq',enquiry)
 
 
+
 export default app;

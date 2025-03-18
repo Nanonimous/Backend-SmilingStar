@@ -5,9 +5,8 @@ export const postAll = async (req,res)=>{
     try{
         const newEnquiry = req.body;
         const tb_Name = req.params.tb;
-        console.log(tb_Name)
-        console.log(newEnquiry)
-        const out = await postIt.postData(tb_Name,newEnquiry.id);
+        const progName = req.params.prog;
+        const out = await postIt.postwData(progName,tb_Name,newEnquiry.id);
         res.status(200).json(out);
     }catch(err){
         console.log(err)
@@ -18,9 +17,9 @@ export const postAll = async (req,res)=>{
 export const deleteAll = async (req,res)=>{
     try{
         const newEnquiry = req.body;
-        console.log(req.body)
         const tb_Name = req.params.tb;
-        const out = await postIt.deleteData(tb_Name,newEnquiry.id);
+        const progName = req.params.prog;
+        const out = await postIt.deleteData(progName,tb_Name,newEnquiry.id);
         res.status(200).json(out);
     }catch(err){
         console.log(err)

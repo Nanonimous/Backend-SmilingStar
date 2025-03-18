@@ -1,4 +1,11 @@
-import db from '../config/db.js';
+import { db1, db2, db3, db4 } from '../config/db.js';
+
+const db_mapping = {
+    dayCare : db1,
+    bharataNatyam : db2,
+    carnatic : db3,
+    HindiClass : db4,
+}
 
 var queryTemplates_post = {
     payments : {
@@ -11,10 +18,10 @@ var queryTemplates_post = {
     }
 }
 
-export const postMulData = async (Tb_name,newEnquiry)=>{
+export const postMulData = async (progName,Tb_name,newEnquiry)=>{
     try{
         console.log("student id in service", newEnquiry);
-        await db.query(`INSERT INTO ${Tb_name} ${queryTemplates_post[Tb_name].cols} 
+        await db_mapping[progName].query(`INSERT INTO ${Tb_name} ${queryTemplates_post[Tb_name].cols} 
                         select ${queryTemplates_post[Tb_name].vals} 
                         FROM UNNEST(ARRAY[${newEnquiry}]) AS student_id`)
         return("sucessfully added the enquiry data");
@@ -33,10 +40,10 @@ var queryTemplates_delete = {
     }   
 }
 
-export const deleteMulData = async (Tb_name,newEnquiry)=>{
+export const deleteMulData = async (progName,Tb_name,newEnquiry)=>{
     try{
         console.log(`DELETE FROM ${Tb_name} WHERE ${queryTemplates_delete[Tb_name].cols} = ANY(ARRAY[${newEnquiry}])`)
-        await db.query(`DELETE FROM ${Tb_name} WHERE ${queryTemplates_delete[Tb_name].cols} = ANY(ARRAY[${newEnquiry}])`);
+        await db_mapping[progName].query(`DELETE FROM ${Tb_name} WHERE ${queryTemplates_delete[Tb_name].cols} = ANY(ARRAY[${newEnquiry}])`);
         return("sucessfully deleted the enquiry data");
     }
     catch(err){

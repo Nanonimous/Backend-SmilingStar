@@ -1,9 +1,14 @@
-import db from '../config/db.js';
+import { db1, db2, db3, db4 } from '../config/db.js';
 
+const db_mapping = {
+    dayCare : db1,
+    bharataNatyam : db2,
+    carnatic : db3,
+    HindiClass : db4,
+}
 
-
-export const fetchNoConData = async (Tb_name)=>{
-    let deta = await db.query(`select * from ${Tb_name}`);
+export const fetchNoConData = async (progName, Tb_name)=>{
+    let deta = await db_mapping[progName].query(`select * from ${Tb_name}`);
     return (deta.rows)
 } 
 
@@ -27,12 +32,12 @@ const conDataTemplate = {
     }
 }
 
-export const fetchConDataPay = async (Tb_name,getDate)=>{
-    let deta = await db.query(conDataTemplate[Tb_name].query,[getDate]);
+export const fetchConDataPay = async (progName,Tb_name,getDate)=>{
+    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[getDate]);
     return (deta.rows)
 } 
 
-export const fetchConDataAtt = async (Tb_name,getMonth,getYear)=>{
-    let deta = await db.query(conDataTemplate[Tb_name].query,[getMonth,getYear]);
+export const fetchConDataAtt = async (progName,Tb_name,getMonth,getYear)=>{
+    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[getMonth,getYear]);
     return (deta.rows)
 } 

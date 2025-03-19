@@ -17,6 +17,7 @@ export const postOneEnquiry = async (req,res)=>{
         const tableName = req.params.td;
         console.log(tableName)
         const newEnquiry = req.body;
+        const progName = req.params.prog;
         console.log(newEnquiry);
         const response = await axios.post(`http://localhost:4000/Mc-2/methods/${progName}/${tableName}`,newEnquiry);
         res.status(200).json(response.data);
@@ -30,6 +31,7 @@ export const postAllEnquiry = async (req,res)=>{
         const tableName = req.params.td;
         console.log(tableName)
         const newEnquiry = req.body;
+        const progName = req.params.prog;
         console.log(newEnquiry);
         const response = await axios.post(`http://localhost:4000/Mc-2/methods/multiple/${progName}/${tableName}`,newEnquiry);
         res.status(200).json(response.data);
@@ -42,6 +44,7 @@ export const deleteOneEnquiry = async (req,res)=>{
     try{
         const tableName = req.params.td;
         const newEnquiry = req.body;
+        const progName = req.params.prog;
         console.log(newEnquiry)
         const response = await axios.delete(`http://localhost:4000/Mc-2/methods/${progName}/${tableName}`,{data:newEnquiry});
         res.status(200).json(response.data);
@@ -54,6 +57,7 @@ export const deleteAllEnquiry = async (req,res)=>{
     try{
         const tableName = req.params.td;
         const newEnquiry = req.body;
+        const progName = req.params.prog;
         console.log(newEnquiry)
         const response = await axios.delete(`http://localhost:4000/Mc-2/methods/multiple/${progName}/${tableName}`,{data:newEnquiry});
         res.status(200).json(response.data);

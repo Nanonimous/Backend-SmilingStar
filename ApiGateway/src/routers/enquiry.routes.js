@@ -5,9 +5,9 @@ import {getAllEnquiry, postAllEnquiry, deleteAllEnquiry, postOneEnquiry, deleteO
 const router = express.Router(); 
 
 router.get("/:prog/:td",getAllEnquiry)
-router.post("/:prog/multi/:td",postAllEnquiry)
+router.post("/multi/:prog/:td",postAllEnquiry)
 router.post("/:prog/:td",postOneEnquiry)
 router.delete("/:prog/:td",deleteOneEnquiry)
-router.delete("/:prog/multi/:td",deleteAllEnquiry)
+router.delete("/multi/:prog/:td",deleteAllEnquiry)
 
 export default router;

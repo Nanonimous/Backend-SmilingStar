@@ -9,11 +9,12 @@ var colTemplates_post = {
         cols : `(student_name,father_name,mother_name,address,email,age,phone_number,gender,monthly_fee)`,
         vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9)`
     }
+    
 }
 
 export const postData = async (Tb_name,newEnquiry)=>{
     try{
-        await db.query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
+        await db.query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry)) 
         return("sucessfully added the enquiry data");
     }
     catch(err){

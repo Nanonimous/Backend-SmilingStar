@@ -17,7 +17,7 @@ const conDataTemplate = {
         query : `SELECT s.student_id, s.student_name,
                 CASE WHEN a.student_id IS NOT NULL THEN 'Present' ELSE 'Absent' END AS attendance_status,
                 COALESCE(a.attendance_date, $1) AS attendance_date
-                FROM students s
+                FROM students 
                 LEFT JOIN attendance a ON s.student_id = a.student_id 
                 AND a.attendance_date = $1`
     },

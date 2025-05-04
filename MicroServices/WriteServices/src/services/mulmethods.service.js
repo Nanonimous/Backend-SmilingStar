@@ -1,10 +1,10 @@
 import { db1, db2, db3, db4 } from '../config/db.js';
 
 const db_mapping = {
-    dayCare : db1,
-    bharataNatyam : db2,
+    daycare : db1,
+    bharatanatyam : db2,
     carnatic : db3,
-    HindiClass : db4,
+    Hindiclass : db4,
 }
 
 var queryTemplates_post = {
@@ -30,6 +30,64 @@ export const postMulData = async (progName,Tb_name,newEnquiry)=>{
         return("enquiry form is not add",err)
     }
 } 
+
+var colTemplates_patch = {
+    enquiry: {
+        con: "sno",
+        type: "text"
+    },
+    payments: {
+        con: "payment_id",
+        type: "boolean"
+    },
+    attendance: {
+        con: "attendance_id",
+        type: "boolean"
+    }
+};
+
+export const patchMulData = async (progName, Tb_name, newEnquiry) => {
+    try {
+        const { id: ids, status: statuses } = newEnquiry;
+
+        // Safety checks
+        if (!Array.isArray(ids) || !Array.isArray(statuses)) {
+            throw new Error("IDs and statuses must be arrays.");
+        }
+
+        if (ids.length !== statuses.length) {
+            throw new Error("IDs and statuses length mismatch");
+        }
+
+        const valuesClause = ids
+            .map((_, i) => `($${i * 2 + 1}, $${i * 2 + 2})`)
+            .join(', ');
+
+        const values = ids.flatMap((id, i) => [id, statuses[i]]);
+        const columnName = colTemplates_patch[Tb_name]?.con;
+
+        if (!columnName) {
+            throw new Error(`Invalid table name: ${Tb_name}`);
+        }
+
+        const query = `
+                UPDATE ${Tb_name} AS t
+                SET checkIt = v.checkIt::${colTemplates_patch[Tb_name].type}
+                FROM (
+                    VALUES ${valuesClause}
+                ) AS v(id, checkIt)
+                WHERE t.${columnName} = v.id::int;
+            `;
+    
+
+        await db_mapping[progName].query(query, values);
+        return { message: `Successfully updated ${Tb_name} data` };
+    } catch (err) {
+        console.error("Update error:", err);
+        return { error: "Error updating data", details: err.message };
+    }
+};
+
 
 var queryTemplates_delete = {
     payments :{ 

@@ -1,10 +1,10 @@
 import { db1, db2, db3, db4 } from '../config/db.js';
 
 const db_mapping = {
-    dayCare : db1,
-    bharataNatyam : db2,
+    daycare : db1,
+    bharatanatyam : db2,
     carnatic : db3,
-    HindiClass : db4,
+    Hindiclass : db4,
 }
 
 var colTemplates_post = {
@@ -37,6 +37,29 @@ export const postData = async (progName,Tb_name,newEnquiry)=>{
     }
 } 
 
+var colTemplates_patch= {
+    enquiry : {
+        con : "sno"
+    },
+    payments : {
+        con : "payment_id"
+    },
+    attendance : {
+        con : "attendance_id"
+    }
+}    
+
+export const patchData = async (progName,Tb_name,newCheckIt)=>{
+    try{
+        console.log(Object.values(newCheckIt));
+        await db_mapping[progName].query(`update ${Tb_name} set status = $1 where ${colTemplates_patch[Tb_name].con} = $2`,[newCheckIt.status , newCheckIt.id]);
+        return(`sucessfully updated the ${Tb_name} data`);
+    }
+    catch(err){
+        return("enquiry form is not add",err)
+    }
+} 
+
 var colTemplates_delete = {
     enquiry : {
         condition : `sno`,
@@ -46,11 +69,15 @@ var colTemplates_delete = {
     },
     payments :{
         condition : "payment_id"
+    },
+    attendance:{
+        condition : "attendance_id"
     }
+
 }
 
 export const deleteData = async (progName,Tb_name,newEnquiry)=>{
-    try{
+    try{ 
         await db_mapping[progName].query(`DELETE FROM ${Tb_name} WHERE ${colTemplates_delete[Tb_name].condition} = $1`,[newEnquiry]);
         return("sucessfully deleted the enquiry data");
     }

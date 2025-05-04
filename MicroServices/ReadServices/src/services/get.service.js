@@ -1,10 +1,10 @@
 import { db1, db2, db3, db4 } from '../config/db.js';
 
 const db_mapping = {
-    dayCare : db1,
-    bharataNatyam : db2,
+    daycare : db1,
+    bharatanatyam : db2,
     carnatic : db3,
-    HindiClass : db4,
+    Hindiclass : db4,
 }
 
 export const fetchNoConData = async (progName, Tb_name)=>{

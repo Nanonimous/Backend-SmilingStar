@@ -12,6 +12,19 @@ export const postMul = async (req,res)=>{
     }
     
 }
+export const patchMul = async (req,res)=>{
+    try{
+        const newEnquiry = req.body;
+        const tb_Name = req.params.tb;
+        const progName = req.params.prog;
+        console.log(newEnquiry);
+        const out = await postIt.patchMulData(progName,tb_Name,newEnquiry);
+        res.status(200).json(out);
+    }catch(err){
+        console.log(err)
+    }
+    
+}
 
 export const deleteMul = async (req,res)=>{
     try{

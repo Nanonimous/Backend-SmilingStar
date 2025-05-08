@@ -28,8 +28,12 @@ var colTemplates_post = {
 
 export const postData = async (progName,Tb_name,newEnquiry)=>{
     try{
+        console.log("come to post data");
+        
         console.log(Object.values(newEnquiry))
         await db_mapping[progName].query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
+        console.log("students added sucessfull");
+        
         return("sucessfully added the enquiry data");
     }
     catch(err){

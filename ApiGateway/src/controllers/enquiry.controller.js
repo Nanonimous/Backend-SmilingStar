@@ -5,7 +5,7 @@ export const getAllEnquiry = async (req,res)=>{
         const tableName = req.params.td;
         const progName = req.params.prog;
         console.log(tableName,progName)
-        const response = await axios.get(`http://localhost:3000/Mc-1/get/${progName}/${tableName}`);
+        const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}`);
         res.status(200).json(response.data);
     }catch(err){    
         res.status(500).json({ message: 'Failed to fetch products' });

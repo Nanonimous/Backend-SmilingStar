@@ -2,6 +2,8 @@ import pg from "pg";
 import * as getIt from "../services/get.service.js"
 export const getAll = async (req,res)=>{
     try{
+      
+        
         const tb_Name = req.params.tb;
         const progName = req.params.prog;
         if(req.query.getdate){

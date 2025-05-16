@@ -1,10 +1,13 @@
-import { db1, db2, db3, db4 } from '../config/db.js';
+import { db1, db2, db3, db4 ,db5 , db6 , db7} from '../config/db.js';
 
 const db_mapping = {
     daycare : db1,
     bharatanatyam : db2,
     carnatic : db3,
-    Hindiclass : db4,
+    hindiclass : db4,
+    piano: db5,
+    violin: db6,
+    tabla:db7
 }
 
 var colTemplates_post = {
@@ -17,18 +20,20 @@ var colTemplates_post = {
         vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9)`
     },
     payments : {
-        cols : `(student_id,payment_date,status,month,year)`,
-        vals : `($1 , CURRENT_DATE , true , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
-    },
+        cols : `(student_id, payment_date, checkit, month, year)`,
+        vals : `($1, CURRENT_DATE, false, EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE))`
+    },    
     attendance : {
-        cols : `(student_id,attendance_date,status,month,year)`,
-        vals : `($1, CURRENT_DATE , true , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
+        cols : `(student_id,attendance_date,checkit,month,year)`,
+        vals : `($1, CURRENT_DATE , false , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
     }
 }
 
 export const postData = async (progName,Tb_name,newEnquiry)=>{
     try{
         console.log(Object.values(newEnquiry))
+        
+        console.log(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`)
         await db_mapping[progName].query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
         return("sucessfully added the enquiry data");
     }

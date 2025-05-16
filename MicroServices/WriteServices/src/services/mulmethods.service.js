@@ -1,35 +1,53 @@
-import { db1, db2, db3, db4 } from '../config/db.js';
+import { db1, db2, db3, db4 ,db5 ,db6 ,db7} from '../config/db.js';
 
 const db_mapping = {
     daycare : db1,
     bharatanatyam : db2,
     carnatic : db3,
-    Hindiclass : db4,
+    hindiclass : db4,
+    piano: db5,
+    violin: db6,
+    tabla:db7
 }
 
 var queryTemplates_post = {
     payments : {
-        cols : `(student_id, payment_date, status, month, year)`,
-        vals :`student_id, CURRENT_DATE, true , EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)`,
+        cols : `(student_id, payment_date, checkit, month, year)`,
+        vals :`student_id, CURRENT_DATE, false , EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)`,
     },
     attendance : {
-        cols : `(student_id, attendance_date, status, month, year)`,
-        vals :`student_id, CURRENT_DATE, true , EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)`,
+        cols : `(student_id, attendance_date, checkit, month, year)`,
+        vals :`student_id, CURRENT_DATE, false , EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)`,
     }
 }
 
-export const postMulData = async (progName,Tb_name,newEnquiry)=>{
-    try{
-        console.log("student id in service", newEnquiry);
-        await db_mapping[progName].query(`INSERT INTO ${Tb_name} ${queryTemplates_post[Tb_name].cols} 
-                        select ${queryTemplates_post[Tb_name].vals} 
-                        FROM UNNEST(ARRAY[${newEnquiry}]) AS student_id`)
-        return("sucessfully added the enquiry data");
+export const postMulData = async (progName, Tb_name, newEnquiry) => {
+    try {
+        console.log("student ids in service:", newEnquiry);
+
+        // Validate table name
+        if (!queryTemplates_post[Tb_name]) {
+            throw new Error("Invalid table name");
+        }
+
+        const { cols, vals } = queryTemplates_post[Tb_name];
+
+        // Use parameterized query for safety
+        const query = `
+            INSERT INTO ${Tb_name} ${cols}
+            SELECT student_id, CURRENT_DATE, false, EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)
+            FROM UNNEST($1::int[]) AS student_id
+        `;
+
+        await db_mapping[progName].query(query, [newEnquiry]);
+
+        return "Successfully added the enquiry data";
+    } catch (err) {
+        console.error(err);
+        return `Enquiry form not added: ${err.message}`;
     }
-    catch(err){
-        return("enquiry form is not add",err)
-    }
-} 
+};
+
 
 var colTemplates_patch = {
     enquiry: {

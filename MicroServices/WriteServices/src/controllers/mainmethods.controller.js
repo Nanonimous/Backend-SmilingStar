@@ -25,7 +25,6 @@ export const patchAll = async (req,res)=>{
     }catch(err){
         console.log(err)
     }
-    
 }
 
 export const deleteAll = async (req,res)=>{

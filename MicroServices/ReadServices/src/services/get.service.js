@@ -1,10 +1,13 @@
-import { db1, db2, db3, db4 } from '../config/db.js';
+import { db1, db2, db3, db4 , db5, db6, db7} from '../config/db.js';
 
 const db_mapping = {
     daycare : db1,
     bharatanatyam : db2,
     carnatic : db3,
-    Hindiclass : db4,
+    hindiclass : db4,
+    piano: db5,
+    violin: db6,
+    tabla:db7
 }
 
 export const fetchNoConData = async (progName, Tb_name)=>{

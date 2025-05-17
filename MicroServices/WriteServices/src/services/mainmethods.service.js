@@ -12,8 +12,8 @@ const db_mapping = {
 
 var colTemplates_post = {
     enquiry : {
-        cols : `(first_name,last_name,email,mobile,pincode,country,state,city,location,programs,age,gender)`,
-        vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
+        cols : `(first_name,last_name,email,mobile,pincode,country,state,city,location,programs,age,gender,checkit)`,
+        vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 ,$13)`
     },
     students :{ 
         cols : `(student_name,father_name,mother_name,address,email,age,phone_number,gender,monthly_fee)`,

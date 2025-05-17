@@ -16,8 +16,8 @@ export const getAll = async (req, res) => {
             const getYear = req.query.year;
             const getDate = req.query.date;
             console.log("month:", req.query.month);
-console.log("year:", req.query.year);
-console.log("date:", req.query.date);
+            console.log("year:", req.query.year);
+            console.log("date:", req.query.date);
             console.log("comming here to attendance")
             const formateDate = `${getYear}-${getMonth}-${getDate}`;
             const out = await getIt.fetchConDataAtt(progName, tb_Name, formateDate);

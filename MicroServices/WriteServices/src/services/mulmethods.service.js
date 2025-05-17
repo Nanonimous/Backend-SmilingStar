@@ -66,7 +66,7 @@ var colTemplates_patch = {
 
 export const patchMulData = async (progName, Tb_name, newEnquiry) => {
     try {
-        const { id: ids, status: statuses } = newEnquiry;
+        const { id: ids, checkit: statuses } = newEnquiry;
 
         // Safety checks
         if (!Array.isArray(ids) || !Array.isArray(statuses)) {

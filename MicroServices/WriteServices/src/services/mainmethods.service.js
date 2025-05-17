@@ -56,8 +56,8 @@ var colTemplates_patch= {
 
 export const patchData = async (progName,Tb_name,newCheckIt)=>{
     try{
-        console.log(Object.values(newCheckIt));
-        await db_mapping[progName].query(`update ${Tb_name} set status = $1 where ${colTemplates_patch[Tb_name].con} = $2`,[newCheckIt.status , newCheckIt.id]);
+        console.log("in the query section ",Object.values(newCheckIt));
+        await db_mapping[progName].query(`update ${Tb_name} set checkit = $1 where ${colTemplates_patch[Tb_name].con} = $2`,[newCheckIt.checkit, newCheckIt.id]);
         return(`sucessfully updated the ${Tb_name} data`);
     }
     catch(err){

@@ -17,30 +17,34 @@ export const fetchNoConData = async (progName, Tb_name)=>{
 
 const conDataTemplate = {
     attendance : {
-        query : `SELECT s.student_id, s.student_name,
-                CASE WHEN a.student_id IS NOT NULL THEN 'Present' ELSE 'Absent' END AS attendance_status,
-                COALESCE(a.attendance_date, $1) AS attendance_date
-                FROM students 
-                LEFT JOIN attendance a ON s.student_id = a.student_id 
-                AND a.attendance_date = $1`
+        query : `SELECT 
+                    *
+                    FROM 
+                        students s
+                    JOIN 
+                        attendance a ON s.student_id = a.student_id
+                    WHERE 
+                    a.attendance_date=$1;`
     },
     payments :{
-        query : `SELECT s.student_id, s.student_name, 
-                COALESCE(p.status, 'Unpaid') AS payment_status, 
-                p.payment_date, p.amount
-                FROM students s
-                LEFT JOIN payments p ON s.student_id = p.student_id 
-                AND p.month = $1  
-                AND p.year = $2` 
+        query : `SELECT 
+                    *
+                    FROM 
+                        students s
+                    JOIN 
+                        payments p ON s.student_id = p.student_id
+                    WHERE 
+                        p.month= $1 and p.year = $2
+                    ;` 
     }
 }
 
-export const fetchConDataPay = async (progName,Tb_name,getDate)=>{
-    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[getDate]);
+export const fetchConDataPay = async (progName,Tb_name,Month,year )=>{
+    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[Month,year]);
     return (deta.rows)
 } 
 
-export const fetchConDataAtt = async (progName,Tb_name,getMonth,getYear)=>{
-    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[getMonth,getYear]);
+export const fetchConDataAtt = async (progName,Tb_name,formateDate)=>{
+    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[formateDate]);
     return (deta.rows)
 } 

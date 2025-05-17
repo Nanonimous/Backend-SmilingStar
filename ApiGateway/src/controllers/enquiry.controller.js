@@ -5,8 +5,17 @@ export const getAllEnquiry = async (req,res)=>{
         const tableName = req.params.td;
         const progName = req.params.prog;
         console.log(tableName,progName)
-        const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}`);
-        res.status(200).json(response.data);
+        if (req.query.pMonth && req.query.pYear) {
+            const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}?getMonth=${req.query.pMonth}&getYear=${req.query.pYear}`);
+            res.status(200).json(response.data);
+        }else if (req.query.aMonth && req.query.aYear && req.query.aDate) {
+            
+            const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}?year=${req.query.aYear}&date=${req.query.aDate}&month=${req.query.aMonth}`);
+            res.status(200).json(response.data);
+        }else {
+            const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}`);
+            res.status(200).json(response.data);
+        }
     }catch(err){    
         res.status(500).json({ message: 'Failed to fetch products' });
     }

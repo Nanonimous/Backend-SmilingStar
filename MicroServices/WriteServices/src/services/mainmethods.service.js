@@ -34,8 +34,12 @@ export const postData = async (progName,Tb_name,newEnquiry)=>{
         console.log(Object.values(newEnquiry))
         
         console.log(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`)
-        await db_mapping[progName].query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
-        return("sucessfully added the enquiry data");
+        const respo = await db_mapping[progName].query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
+        if(Tb_name == "students"){
+            return( "this is coming from student adding ",respo);
+        }else{
+            return("sucessfully added the enquiry data" );
+        }
     }
     catch(err){
         return("enquiry form is not add",err)

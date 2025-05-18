@@ -85,8 +85,11 @@ export const deleteOneEnquiry = async (req,res)=>{
         const tableName = req.params.td;
         const newEnquiry = req.body;
         const progName = req.params.prog;
+        const ids = req.query.id;
         console.log(newEnquiry)
-        const response = await axios.delete(`http://localhost:4000/Mc-2/methods/${progName}/${tableName}`,{data:newEnquiry});
+        const response = await axios.delete(`http://localhost:4000/Mc-2/methods/${progName}/${tableName}`,{data:{
+            "id" : ids
+        }});
         res.status(200).json(response.data);
     }catch(err){    
         res.status(500).json({ message: 'Failed to fetch products' });

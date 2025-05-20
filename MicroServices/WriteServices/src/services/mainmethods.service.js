@@ -15,6 +15,10 @@ var colTemplates_post = {
         cols : `(first_name,last_name,email,mobile,pincode,country,state,city,location,programs,age,gender,checkit)`,
         vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 ,$13)`
     },
+    class_dates : {
+        cols : `(attendance_date)`,
+        vals : `(CURRENT_DATE)`
+    },
     students :{ 
         cols : `(student_name,father_name,mother_name,address,email,age,phone_number,gender,monthly_fee)`,
         vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9)`
@@ -42,6 +46,7 @@ export const postData = async (progName,Tb_name,newEnquiry)=>{
         }
     }
     catch(err){
+
         return("enquiry form is not add",err)
     }
 } 
@@ -81,6 +86,9 @@ var colTemplates_delete = {
     },
     attendance:{
         condition : "attendance_id"
+    },
+    class_dates : {
+        condition : "attendance_date"
     }
 
 }

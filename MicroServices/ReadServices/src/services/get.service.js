@@ -36,6 +36,9 @@ const conDataTemplate = {
                     WHERE 
                         p.month= $1 and p.year = $2
                     ;` 
+    },
+    paymentAll :{
+        query :`SELECT * FROM payments WHERE student_id = $1`
     }
 }
 
@@ -48,3 +51,9 @@ export const fetchConDataAtt = async (progName,Tb_name,formateDate)=>{
     let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[formateDate]);
     return (deta.rows)
 } 
+
+export const fetchStuIds = async (progName, Tb_name, stuIds) =>{
+    console.log(stuIds)
+    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[stuIds]);
+    return (deta.rows)
+}

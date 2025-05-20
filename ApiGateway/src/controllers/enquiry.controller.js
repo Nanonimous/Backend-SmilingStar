@@ -12,7 +12,10 @@ export const getAllEnquiry = async (req,res)=>{
             
             const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}?year=${req.query.aYear}&date=${req.query.aDate}&month=${req.query.aMonth}`);
             res.status(200).json(response.data);
-        }else {
+        }else if(req.query.pstudId){
+            const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}?studId=${req.query.pstudId}`);
+            res.status(200).json(response.data);
+        } else{
             const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}`);
             res.status(200).json(response.data);
         }
@@ -101,7 +104,7 @@ export const deleteAllEnquiry = async (req,res)=>{
         const tableName = req.params.td;
         const newEnquiry = req.body;
         const progName = req.params.prog;
-        console.log(newEnquiry)
+        console.log(req.body.id)
         const response = await axios.delete(`http://localhost:4000/Mc-2/methods/multiple/${progName}/${tableName}`,{data:newEnquiry});
         res.status(200).json(response.data);
     }catch(err){    

@@ -15,7 +15,12 @@ export const getAllEnquiry = async (req,res)=>{
         }else if(req.query.pstudId){
             const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}?studId=${req.query.pstudId}`);
             res.status(200).json(response.data);
-        } else{
+        } 
+        else if(req.query.areciptMon){
+            console.log(req.query.areciptMon)
+            const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}?reciptMon=${req.query.areciptMon}`);
+            res.status(200).json(response.data);
+        }else{
             const response = await axios.get(`http://localhost:6000/Mc-1/get/${progName}/${tableName}`);
             res.status(200).json(response.data);
         }

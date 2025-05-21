@@ -39,6 +39,16 @@ const conDataTemplate = {
     },
     paymentAll :{
         query :`SELECT * FROM payments WHERE student_id = $1`
+    },
+    AttendanceRecipt :{
+        query : `SELECT 
+                    *
+                    FROM 
+                        students s
+                    JOIN 
+                        attendance a ON s.student_id = a.student_id
+                    WHERE 
+                    a.month=$1;`
     }
 }
 
@@ -55,5 +65,11 @@ export const fetchConDataAtt = async (progName,Tb_name,formateDate)=>{
 export const fetchStuIds = async (progName, Tb_name, stuIds) =>{
     console.log(stuIds)
     let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[stuIds]);
+    return (deta.rows)
+}
+
+export const fetchAttMon = async (progName, Tb_name, attMon) =>{
+    console.log(attMon)
+    let deta = await db_mapping[progName].query(conDataTemplate[Tb_name].query,[attMon]);
     return (deta.rows)
 }

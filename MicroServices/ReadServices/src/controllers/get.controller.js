@@ -28,6 +28,13 @@ export const getAll = async (req, res) => {
 
             const out = await getIt.fetchStuIds(progName, "paymentAll", stuIds);
             return res.status(200).json(out);
+        }else if(req.query.reciptMon){
+            console.log(req.query.reciptMon)
+                const printMon = req.query.reciptMon;
+                console.log("months in getting fetch",printMon)
+
+            const out = await getIt.fetchAttMon(progName, "AttendanceRecipt", printMon);
+            return res.status(200).json(out);                                     
         }
         else{
             // Default response if no query matches

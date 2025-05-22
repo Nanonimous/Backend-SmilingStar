@@ -17,7 +17,7 @@ var queryTemplates_post = {
     },
     attendance : {
         cols : `(student_id, attendance_date, checkit, month, year)`,
-        vals :`student_id, CURRENT_DATE, false , EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)`,
+        vals :`student_id, CURRENT_DATE , false , EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE)`,
     }
 }
 

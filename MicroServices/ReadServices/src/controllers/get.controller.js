@@ -19,7 +19,9 @@ export const getAll = async (req, res) => {
             console.log("year:", req.query.year);
             console.log("date:", req.query.date);
             console.log("comming here to attendance")
-            const formateDate = `${getYear}-0${getMonth}-${getDate}`;
+
+            const formateDate = getDate < 10 ? `${getYear}-0${getMonth}-0${getDate}`: `${getYear}-0${getMonth}-${getDate}`;
+            console.log(formateDate)
             const out = await getIt.fetchConDataAtt(progName, tb_Name, formateDate);
             return res.status(200).json(out);
         } else if(req.query.studId){

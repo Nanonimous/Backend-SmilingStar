@@ -1,40 +1,73 @@
-import { db1, db2, db3, db4 } from '../config/db.js';
+import { db1, db2, db3, db4 ,db5 , db6 , db7} from '../config/db.js';
 
 const db_mapping = {
-    dayCare : db1,
-    bharataNatyam : db2,
+    daycare : db1,
+    bharatanatyam : db2,
     carnatic : db3,
-    HindiClass : db4,
+    hindiclass : db4,
+    piano: db5,
+    violin: db6,
+    tabla:db7
 }
 
 var colTemplates_post = {
     enquiry : {
-        cols : `(first_name,last_name,email,mobile,pincode,country,state,city,location,programs,age,gender)`,
-        vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
+        cols : `(first_name,last_name,email,mobile,pincode,country,state,city,location,programs,age,gender,checkit)`,
+        vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 ,$13)`
+    },
+    class_dates : {
+        cols : `(attendance_date)`,
+        vals : `(CURRENT_DATE)`
     },
     students :{ 
         cols : `(student_name,father_name,mother_name,address,email,age,phone_number,gender,monthly_fee)`,
         vals : `($1, $2, $3, $4, $5, $6, $7, $8, $9)`
     },
     payments : {
-        cols : `(student_id,payment_date,status,month,year)`,
-        vals : `($1 , CURRENT_DATE , true , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
-    },
+        cols : `(student_id, payment_date, checkit, month, year)`,
+        vals : `($1, CURRENT_DATE, false, EXTRACT(MONTH FROM CURRENT_DATE), EXTRACT(YEAR FROM CURRENT_DATE))`
+    },    
     attendance : {
-        cols : `(student_id,attendance_date,status,month,year)`,
-        vals : `($1, CURRENT_DATE , true , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
+        cols : `(student_id,attendance_date,checkit,month,year)`,
+        vals : `($1, CURRENT_DATE , false , EXTRACT(MONTH FROM CURRENT_DATE) , EXTRACT(YEAR FROM CURRENT_DATE))`
     }
 }
 
 export const postData = async (progName,Tb_name,newEnquiry)=>{
     try{
-        console.log("come to post data");
-        
         console.log(Object.values(newEnquiry))
-        await db_mapping[progName].query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
-        console.log("students added sucessfull");
         
-        return("sucessfully added the enquiry data");
+        console.log(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`)
+        const respo = await db_mapping[progName].query(`insert into ${Tb_name} ${colTemplates_post[Tb_name].cols} values ${colTemplates_post[Tb_name].vals}`,Object.values(newEnquiry))
+        if(Tb_name == "students"){
+            return( "this is coming from student adding ",respo);
+        }else{
+            return("sucessfully added the enquiry data" );
+        }
+    }
+    catch(err){
+
+        return("enquiry form is not add",err)
+    }
+} 
+
+var colTemplates_patch= {
+    enquiry : {
+        con : "sno"
+    },
+    payments : {
+        con : "payment_id"
+    },
+    attendance : {
+        con : "attendance_id"
+    }
+}    
+
+export const patchData = async (progName,Tb_name,newCheckIt)=>{
+    try{
+        console.log("in the query section ",Object.values(newCheckIt));
+        await db_mapping[progName].query(`update ${Tb_name} set checkit = $1 where ${colTemplates_patch[Tb_name].con} = $2`,[newCheckIt.checkit, newCheckIt.id]);
+        return(`sucessfully updated the ${Tb_name} data`);
     }
     catch(err){
         return("enquiry form is not add",err)
@@ -50,11 +83,18 @@ var colTemplates_delete = {
     },
     payments :{
         condition : "payment_id"
+    },
+    attendance:{
+        condition : "attendance_id"
+    },
+    class_dates : {
+        condition : "attendance_date"
     }
+
 }
 
 export const deleteData = async (progName,Tb_name,newEnquiry)=>{
-    try{
+    try{ 
         await db_mapping[progName].query(`DELETE FROM ${Tb_name} WHERE ${colTemplates_delete[Tb_name].condition} = $1`,[newEnquiry]);
         return("sucessfully deleted the enquiry data");
     }

@@ -10,8 +10,11 @@ const db_mapping = {
     tabla:db7
 }
 
-export const fetchNoConData = async (progName, Tb_name)=>{
+export const fetchNoConData = async (progName, Tb_name)=>{  
+    console.log("service",Tb_name);
     let deta = await db_mapping[progName].query(`select * from ${Tb_name}`);
+    console.log(deta.rows);
+    
     return (deta.rows)
 } 
 
